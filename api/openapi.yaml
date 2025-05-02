@@ -1,0 +1,575 @@
+openapi: 3.0.0
+info:
+  title: "API de Salas, Niveles, Dispositivos y Notificaciones"
+  description: |
+    Esta API permite gestionar las entidades:
+      - Salas: crear, borrar, modificar y consultar.
+      - Niveles: crear, borrar, modificar y consultar.
+      - Dispositivos: crear, borrar, modificar y consultar.
+      - Notificaciones: enviar notificaciones por email mediante los métodos:
+          • NotificarPresenciaSala
+          • NotificarUsuarioValido
+          • NotificarError
+  version: 1.0.0
+servers:
+- url: http://localhost:9090/api
+paths:
+  /salas:
+    put:
+      tags:
+      - Salas
+      summary: Modificar una sala existente
+      operationId: modificarSala
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sala"
+        required: true
+      responses:
+        "200":
+          description: Sala modificada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Salas
+    post:
+      tags:
+      - Salas
+      summary: Crear una nueva sala
+      operationId: nuevoSala
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sala"
+        required: true
+      responses:
+        "201":
+          description: Sala creada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sala"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Salas
+  /salas/{codigoSala}:
+    get:
+      tags:
+      - Salas
+      summary: Consultar una sala por su código
+      operationId: consultarSala
+      parameters:
+      - name: codigoSala
+        in: path
+        description: Código de la sala
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Detalles de la sala.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sala"
+        "404":
+          description: Sala no encontrada.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Salas
+    delete:
+      tags:
+      - Salas
+      summary: Borrar una sala por su código
+      operationId: borrarSala
+      parameters:
+      - name: codigoSala
+        in: path
+        description: Código de la sala
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Sala eliminada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Sala no encontrada.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Salas
+  /niveles:
+    put:
+      tags:
+      - Niveles
+      summary: Modificar un nivel existente
+      operationId: modificarNivel
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Nivel"
+        required: true
+      responses:
+        "200":
+          description: Nivel modificado exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Niveles
+    post:
+      tags:
+      - Niveles
+      summary: Crear un nuevo nivel
+      operationId: nuevoNivel
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Nivel"
+        required: true
+      responses:
+        "201":
+          description: Nivel creado exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Nivel"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Niveles
+  /niveles/{nivel}:
+    get:
+      tags:
+      - Niveles
+      summary: Consultar un nivel
+      operationId: consultarNivel
+      parameters:
+      - name: nivel
+        in: path
+        description: Nivel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Detalles del nivel.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Nivel"
+        "404":
+          description: Nivel no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Niveles
+    delete:
+      tags:
+      - Niveles
+      summary: Borrar un nivel
+      operationId: borrarNivel
+      parameters:
+      - name: nivel
+        in: path
+        description: Nivel
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Nivel borrado exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Nivel no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Niveles
+  /dispositivos:
+    put:
+      tags:
+      - Dispositivos
+      summary: Modificar un dispositivo existente
+      operationId: modificarDispositivo
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Dispositivo"
+        required: true
+      responses:
+        "200":
+          description: Dispositivo modificado exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Dispositivos
+    post:
+      tags:
+      - Dispositivos
+      summary: Crear un nuevo dispositivo
+      operationId: nuevoDispositivo
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Dispositivo"
+        required: true
+      responses:
+        "201":
+          description: Dispositivo creado exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dispositivo"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Dispositivos
+  /dispositivos/{codigo}:
+    get:
+      tags:
+      - Dispositivos
+      summary: Consultar un dispositivo
+      operationId: consultarDispositivo
+      parameters:
+      - name: codigo
+        in: path
+        description: Código del dispositivo
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Detalles del dispositivo.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dispositivo"
+        "404":
+          description: Dispositivo no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Dispositivos
+    delete:
+      tags:
+      - Dispositivos
+      summary: Borrar un dispositivo
+      operationId: borrarDispositivo
+      parameters:
+      - name: codigo
+        in: path
+        description: Código del dispositivo
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Dispositivo borrado exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Dispositivo no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Dispositivos
+  /notificaciones/presenciaSala:
+    post:
+      tags:
+      - Notificaciones
+      summary: Notificar presencia en sala
+      operationId: notificarPresenciaSala
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      responses:
+        "200":
+          description: Notificación de presencia en sala enviada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Notificaciones
+  /notificaciones/usuarioValido:
+    post:
+      tags:
+      - Notificaciones
+      summary: Notificar usuario válido
+      operationId: notificarUsuarioValido
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificaciones_usuarioValido_body"
+        required: true
+      responses:
+        "200":
+          description: Notificación de usuario válido enviada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Notificaciones
+  /notificaciones/error:
+    post:
+      tags:
+      - Notificaciones
+      summary: Notificar error a un empleado
+      operationId: notificarError
+      parameters:
+      - $ref: '#/components/parameters/WSKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificaciones_error_body"
+        required: true
+      responses:
+        "200":
+          description: Notificación de error enviada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Notificaciones
+components:
+  headers:
+    salidaHeader:
+      description: "Detalle de la ejecución del método, incluyendo salidas correctas y errores"
+      schema:
+        type: string
+  schemas:
+    Sala:
+      required:
+      - codigoSala
+      - nivel
+      - nombre
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador único (autogenerado)
+        codigoSala:
+          type: integer
+          description: Código identificador de la sala
+        nombre:
+          type: string
+          description: Nombre de la sala
+        nivel:
+          type: integer
+          description: Nivel al que pertenece la sala
+      example:
+        codigoSala: 6
+        id: 0
+        nombre: nombre
+        nivel: 1
+    Nivel:
+      required:
+      - descripcion
+      - nivel
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador único (autogenerado)
+        nivel:
+          type: integer
+          description: Nivel
+        descripcion:
+          type: string
+          description: Descripción del nivel
+      example:
+        descripcion: descripcion
+        id: 0
+        nivel: 6
+    Dispositivo:
+      required:
+      - codigo
+      - descripcion
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Identificador único (autogenerado)
+        codigo:
+          type: integer
+          description: Código del dispositivo
+        descripcion:
+          type: string
+          description: Descripción del dispositivo
+      example:
+        descripcion: descripcion
+        codigo: 6
+        id: 0
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+      example:
+        message: message
+        status: 0
+    inline_response_200_1:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: message
+    notificaciones_usuarioValido_body:
+      type: object
+      properties:
+        nif:
+          type: string
+          example: 12345678A
+    notificaciones_error_body:
+      type: object
+      properties:
+        nif:
+          type: string
+          example: 12345678A
+        error:
+          type: string
+          example: Descripción del error
+  parameters:
+    WSKey:
+      name: WSKey
+      in: header
+      description: Clave de autenticación WSKey
+      required: true
+      schema:
+        type: string
