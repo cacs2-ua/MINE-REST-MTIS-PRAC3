@@ -696,6 +696,9 @@ components:
     notificaciones_usuarioNoValido_body:
       type: object
       properties:
+        nifNie:
+          type: string
+          example: 82925965V
         email:
           type: string
           example: carlos@example.com

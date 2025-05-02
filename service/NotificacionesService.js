@@ -93,7 +93,7 @@ exports.notificarUsuarioValido = async function(body, wSKey) {
     let subject, text;
     if (empleado.valido === 1) {
       subject = 'Notificacion: Usuario valido';
-      text = `Te comunicamos que tu usuario es valido. Esta todo correcto.`;
+      text = `El usuario con NIF/NIE ${nif} es valido.`;
       await fakeSMTP.sendEmail(to, subject, text);
       return { 
         message: 'Notificación de usuario valido enviada exitosamente.',
@@ -127,12 +127,16 @@ exports.notificarUsuarioNoValido = async function(body,wSKey) {
   try {
     await utils.validarWSKey(wSKey);
     
-    const { email } = body;
+    const { nifNie, email } = body;
+    const empleado = await notificacionesRepository.getEmpleadoByNif(nifNie);
+    if (!empleado) {
+      throw { message: 'Empleado no encontrado.', salida: 'Empleado no encontrado.' };
+    }
     const to = email;
     let subject, text;
     if (empleado.valido === 0) {
-      subject = 'Invalidez de usuario';
-      text = `Te comunicamos que tu usuario ya no es valido.`;
+      subject = 'Notificacion: Usuario no valido';
+      text = `El usuario con NIF/NIE ${nifNie} no es valido.`;
       await fakeSMTP.sendEmail(to, subject, text);
       return { 
         message: 'Notificación de usuario no valido enviada exitosamente.',

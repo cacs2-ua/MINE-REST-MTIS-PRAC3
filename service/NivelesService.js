@@ -1,7 +1,6 @@
 'use strict';
 
 const nivelesRepository = require('../ConexionDB/NivelesRepository');
-const { nuevoNivel } = require('../controllers/Niveles.js');
 var utils = require('../utils/Utils.js');
 
 /**
