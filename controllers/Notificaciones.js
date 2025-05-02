@@ -46,3 +46,17 @@ module.exports.notificarUsuarioValido = function notificarUsuarioValido(req, res
       utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 404);
     });
 };
+
+module.exports.notificarUsuarioNoValido = function notificarUsuarioNoValido (req, res, next, body, wSKey) {
+  const keyFromRawHeaders = ControllersUtils.getHeaderFromRaw(req.rawHeaders, "wSKey");
+  Notificaciones.notificarUsuarioNoValido(body, keyFromRawHeaders)
+    .then(function(response) {
+      const { salida, ...responseSinSalida } = response;
+      res.set('salida', salida || 'Operación exitosa: notificación de usuario no válido enviada correctamente');
+      utils.writeJson(res, responseSinSalida, response.status || 200);
+    })
+    .catch(function(error) {
+      res.set('salida', error.salida || (error.message || 'Error interno del servidor'));
+      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 404);
+    });
+};

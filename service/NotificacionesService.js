@@ -91,19 +91,23 @@ exports.notificarUsuarioValido = async function(body, wSKey) {
     }
     const to = empleado.email;
     let subject, text;
-    // Validación del campo "valido": 1 -> válido, 0 -> no válido.
     if (empleado.valido === 1) {
       subject = 'Notificacion: Usuario valido';
-      text = `El usuario con NIF ${nif} es valido.`;
-    } else {
-      subject = 'Notificacion: Usuario no valido';
-      text = `El usuario con NIF ${nif} no es valido.`;
+      text = `Te comunicamos que tu usuario es valido. Esta todo correcto.`;
+      await fakeSMTP.sendEmail(to, subject, text);
+      return { 
+        message: 'Notificación de usuario valido enviada exitosamente.',
+        salida: 'Notificación de usuario valido enviada exitosamente.'
+      };
     }
-    await fakeSMTP.sendEmail(to, subject, text);
-    return { 
-      message: 'Notificación de usuario valido enviada exitosamente.',
-      salida: 'Notificación de usuario valido enviada exitosamente.'
-    };
+
+    else {
+      return { 
+        message: 'No se ha enviado ninguna notificacion puesto que el usuario no es valido.',
+        salida: 'No se ha enviado ninguna notificacion puesto que el usuario no es valido.'
+      };
+    }
+
   } catch (error) {
     throw { 
       message: error.message, 
@@ -111,3 +115,42 @@ exports.notificarUsuarioValido = async function(body, wSKey) {
     };
   }
 };
+
+/**
+ * Notificar usuario no válido
+ *
+ * body Notificaciones_usuarioNoValido_body 
+ * wSKey String Clave de autenticación WSKey
+ * returns inline_response_200_1
+ **/
+exports.notificarUsuarioNoValido = async function(body,wSKey) {
+  try {
+    await utils.validarWSKey(wSKey);
+    
+    const { email } = body;
+    const to = email;
+    let subject, text;
+    if (empleado.valido === 0) {
+      subject = 'Invalidez de usuario';
+      text = `Te comunicamos que tu usuario ya no es valido.`;
+      await fakeSMTP.sendEmail(to, subject, text);
+      return { 
+        message: 'Notificación de usuario no valido enviada exitosamente.',
+        salida: 'Notificación de usuario no valido enviada exitosamente.'
+      };
+    }
+
+    else {
+      return { 
+        message: 'No se ha enviado ninguna notificacion puesto que el usuario sí es valido.',
+        salida: 'No se ha enviado ninguna notificacion puesto que el usuario sí es valido.'
+      };
+    }
+
+  } catch (error) {
+    throw { 
+      message: error.message, 
+      salida: error.message 
+    };
+  }
+}

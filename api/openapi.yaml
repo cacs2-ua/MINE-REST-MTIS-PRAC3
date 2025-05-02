@@ -21,7 +21,14 @@ paths:
       summary: Modificar una sala existente
       operationId: modificarSala
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -50,7 +57,14 @@ paths:
       summary: Crear una nueva sala
       operationId: nuevoSala
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -88,7 +102,14 @@ paths:
         explode: false
         schema:
           type: integer
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Detalles de la sala.
@@ -119,7 +140,14 @@ paths:
         explode: false
         schema:
           type: integer
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Sala eliminada exitosamente.
@@ -143,7 +171,14 @@ paths:
       summary: Modificar un nivel existente
       operationId: modificarNivel
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -172,7 +207,14 @@ paths:
       summary: Crear un nuevo nivel
       operationId: nuevoNivel
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -210,7 +252,14 @@ paths:
         explode: false
         schema:
           type: integer
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Detalles del nivel.
@@ -241,7 +290,14 @@ paths:
         explode: false
         schema:
           type: integer
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Nivel borrado exitosamente.
@@ -265,7 +321,14 @@ paths:
       summary: Modificar un dispositivo existente
       operationId: modificarDispositivo
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -294,7 +357,14 @@ paths:
       summary: Crear un nuevo dispositivo
       operationId: nuevoDispositivo
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -332,7 +402,14 @@ paths:
         explode: false
         schema:
           type: integer
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Detalles del dispositivo.
@@ -363,7 +440,14 @@ paths:
         explode: false
         schema:
           type: integer
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Dispositivo borrado exitosamente.
@@ -387,7 +471,14 @@ paths:
       summary: Notificar presencia en sala
       operationId: notificarPresenciaSala
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Notificación de presencia en sala enviada exitosamente.
@@ -411,7 +502,14 @@ paths:
       summary: Notificar usuario válido
       operationId: notificarUsuarioValido
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -434,6 +532,43 @@ paths:
             salida:
               $ref: "#/components/headers/salidaHeader"
       x-swagger-router-controller: Notificaciones
+  /notificaciones/usuarioNoValido:
+    post:
+      tags:
+      - Notificaciones
+      summary: Notificar usuario no válido
+      operationId: notificarUsuarioNoValido
+      parameters:
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/notificaciones_usuarioNoValido_body"
+        required: true
+      responses:
+        "200":
+          description: Notificación de usuario no válido enviada exitosamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_200_1"
+        "404":
+          description: Recurso no encontrado.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Notificaciones
   /notificaciones/error:
     post:
       tags:
@@ -441,7 +576,14 @@ paths:
       summary: Notificar error a un empleado
       operationId: notificarError
       parameters:
-      - $ref: '#/components/parameters/WSKey'
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -465,11 +607,6 @@ paths:
               $ref: "#/components/headers/salidaHeader"
       x-swagger-router-controller: Notificaciones
 components:
-  headers:
-    salidaHeader:
-      description: "Detalle de la ejecución del método, incluyendo salidas correctas y errores"
-      schema:
-        type: string
   schemas:
     Sala:
       required:
@@ -556,6 +693,12 @@ components:
         nif:
           type: string
           example: 12345678A
+    notificaciones_usuarioNoValido_body:
+      type: object
+      properties:
+        email:
+          type: string
+          example: carlos@example.com
     notificaciones_error_body:
       type: object
       properties:
@@ -571,5 +714,15 @@ components:
       in: header
       description: Clave de autenticación WSKey
       required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+  headers:
+    salidaHeader:
+      description: "Detalle de la ejecución del método, incluyendo salidas correctas\
+        \ y errores"
+      style: simple
+      explode: false
       schema:
         type: string
