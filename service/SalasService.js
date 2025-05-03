@@ -69,6 +69,36 @@ exports.consultarSala = async function(codigoSala, wSKey) {
 }
 
 /**
+ * Consultar todas las salas
+ *
+ * wSKey String Clave de autenticación WSKey
+ * returns List<Sala>
+ **/
+exports.consultarTodasSalas = async function(wSKey) {
+  try {
+    await utils.validarWSKey(wSKey);
+    const rows = await salasRepository.consultarTodasSalas();
+
+    const salas = rows.map(row => ({
+      codigoSala: row.codigoSala,
+      id:          row.id,
+      nombre:      row.nombre,
+      nivel:       row.nivel
+    }));
+
+    return salas;
+
+  } catch (error) {
+    throw {
+      status: error.status || 500,
+      message: error.message,
+      salida:  error.message
+    };
+  }
+}
+
+
+/**
  * Modificar una sala existente
  *
  * body Sala  

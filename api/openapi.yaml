@@ -15,6 +15,39 @@ servers:
 - url: http://localhost:9090/api
 paths:
   /salas:
+    get:
+      tags:
+      - Salas
+      summary: Consultar todas las salas
+      operationId: consultarTodasSalas
+      parameters:
+      - name: WSKey
+        in: header
+        description: Clave de autenticación WSKey
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Consulta de todas las salas realizada correctamente.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Sala"
+                x-content-type: application/json
+        "404":
+          description: Sala no encontrada.
+          headers:
+            salida:
+              $ref: "#/components/headers/salidaHeader"
+      x-swagger-router-controller: Salas
     put:
       tags:
       - Salas

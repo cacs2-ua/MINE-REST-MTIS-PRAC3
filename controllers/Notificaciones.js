@@ -15,7 +15,7 @@ module.exports.notificarError = function notificarError(req, res, next, body, wS
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || 'Error interno del servidor'));
-      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 404);
+      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 500);
     });
 };
 
@@ -29,7 +29,7 @@ module.exports.notificarPresenciaSala = function notificarPresenciaSala(req, res
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || 'Error interno del servidor'));
-      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 404);
+      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 500);
     });
 };
 
@@ -43,7 +43,7 @@ module.exports.notificarUsuarioValido = function notificarUsuarioValido(req, res
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || 'Error interno del servidor'));
-      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 404);
+      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 500);
     });
 };
 
@@ -57,6 +57,6 @@ module.exports.notificarUsuarioNoValido = function notificarUsuarioNoValido (req
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || 'Error interno del servidor'));
-      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 404);
+      utils.writeJson(res, { message: error.message || 'Error interno del servidor' }, error.status || 500);
     });
 };

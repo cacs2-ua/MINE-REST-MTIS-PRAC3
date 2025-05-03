@@ -15,7 +15,7 @@ module.exports.borrarSala = function borrarSala(req, res, next, codigoSala, wSKe
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || "Error interno del servidor"));
-      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 404);
+      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 500);
     });
 };
 
@@ -30,9 +30,28 @@ module.exports.consultarSala = function consultarSala(req, res, next, codigoSala
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || "Error interno del servidor"));
-      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 404);
+      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 500);
     });
 };
+
+module.exports.consultarTodasSalas = function consultarTodasSalas(req, res, next, wSKey) {
+  const keyFromRawHeaders = ControllersUtils.getHeaderFromRaw(req.rawHeaders, "wSKey");
+
+  Salas.consultarTodasSalas(keyFromRawHeaders)
+    .then(function(response) {
+      res.set('salida', 'Operación exitosa: Todas las salas han sido consultadas correctamente');
+      utils.writeJson(res, response, response.status || 200);
+    })
+    .catch(function(error) {
+      res.set('salida', error.salida || (error.message || "Error interno del servidor"));
+      utils.writeJson(
+        res,
+        { message: error.message || "Error interno del servidor" },
+        error.status || 500
+      );
+    });
+};
+
 
 module.exports.modificarSala = function modificarSala(req, res, next, body, wSKey) {
   const keyFromRawHeaders = ControllersUtils.getHeaderFromRaw(req.rawHeaders, "wSKey");
@@ -45,7 +64,7 @@ module.exports.modificarSala = function modificarSala(req, res, next, body, wSKe
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || "Error interno del servidor"));
-      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 404);
+      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 500);
     });
 };
 
@@ -60,6 +79,6 @@ module.exports.nuevoSala = function nuevoSala(req, res, next, body, wSKey) {
     })
     .catch(function(error) {
       res.set('salida', error.salida || (error.message || "Error interno del servidor"));
-      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 404);
+      utils.writeJson(res, { message: error.message || "Error interno del servidor" }, error.status || 500);
     });
 };

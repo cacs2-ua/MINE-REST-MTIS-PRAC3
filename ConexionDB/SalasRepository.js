@@ -61,9 +61,24 @@ function consultarSala(codigoSala) {
   });
 }
 
+function consultarTodasSalas() {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM salas;';
+    connection.query(query, (error, results) => {
+      if (error) {
+        console.error('Error al consultar todas las salas:', error);
+        return reject(error);
+      }
+      resolve(results);
+    });
+  });
+}
+
+
 module.exports = {
   insertarSala,
   borrarSala,
   modificarSala,
   consultarSala,
+  consultarTodasSalas
 }
